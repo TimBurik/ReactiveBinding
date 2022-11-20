@@ -41,4 +41,23 @@ public class EngineTests
         
         source.Received().OnNext("test");
     }
+
+    [Fact]
+    public void Binging_is_bidirectional()
+    {
+        var source = new Subject<string>();
+        var sourceListener = Substitute.For<IObserver<string>>();
+        source.Subscribe(sourceListener);
+        
+        var target = new Subject<string>();
+        var targetListener = Substitute.For<IObserver<string>>();
+        target.Subscribe(targetListener);
+        
+        _ = new Binding(source, target);
+        source.OnNext("source");
+        target.OnNext("target");
+
+        sourceListener.Received().OnNext("target");
+        targetListener.Received().OnNext("source");
+    }
 }
