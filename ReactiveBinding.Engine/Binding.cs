@@ -1,9 +1,16 @@
 namespace ReactiveBinding.Engine;
 
-public class Binding
+public sealed class Binding : IDisposable
 {
+    private readonly IDisposable _subscription;
+
     public Binding(IObservable<string> source, IObserver<string> target)
     {
-        source.Subscribe(target);
+        _subscription = source.Subscribe(target);
+    }
+
+    public void Dispose()
+    {
+        _subscription.Dispose();
     }
 }
