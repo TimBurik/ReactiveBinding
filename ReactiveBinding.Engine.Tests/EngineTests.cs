@@ -11,10 +11,22 @@ public class EngineTests
         var source = new Subject<string>();
         var target = Substitute.For<IObserver<string>>();
 
-        _ = new Binding(source, target);
+        _ = new Binding<string>(source, target);
         source.OnNext("test");
         
         target.Received().OnNext("test");
+    }
+    
+    [Fact]
+    public void Binding_works_with_value_types()
+    {
+        var source = new Subject<int>();
+        var target = Substitute.For<IObserver<int>>();
+
+        _ = new Binding<int>(source, target);
+        source.OnNext(42);
+        
+        target.Received().OnNext(42);
     }
 
     [Fact]
@@ -23,7 +35,7 @@ public class EngineTests
         var source = new Subject<string>();
         var target = Substitute.For<IObserver<string>>();
 
-        var binding = new Binding(source, target);
+        var binding = new Binding<string>(source, target);
         binding.Dispose();
         source.OnNext("test");
         
@@ -36,7 +48,7 @@ public class EngineTests
         var source = Substitute.For<IObserver<string>>();
         var target = new Subject<string>();
 
-        _ = new Binding(source, target);
+        _ = new Binding<string>(source, target);
         target.OnNext("test");
         
         source.Received().OnNext("test");
@@ -48,7 +60,7 @@ public class EngineTests
         var source = Substitute.For<IObserver<string>>();
         var target = new Subject<string>();
 
-        var binding = new Binding(source, target);
+        var binding = new Binding<string>(source, target);
         binding.Dispose();
         target.OnNext("test");
         
@@ -66,7 +78,7 @@ public class EngineTests
         var targetListener = Substitute.For<IObserver<string>>();
         target.Subscribe(targetListener);
         
-        _ = new Binding(source, target);
+        _ = new Binding<string>(source, target);
         source.OnNext("source");
         target.OnNext("target");
 
@@ -83,7 +95,7 @@ public class EngineTests
         var targetListener = Substitute.For<IObserver<string>>();
         target.Subscribe(targetListener);
         
-        var binding = new Binding(source, target);
+        var binding = new Binding<string>(source, target);
         binding.Dispose();
         source.OnNext("source");
         
@@ -99,7 +111,7 @@ public class EngineTests
 
         var target = new Subject<string>();
 
-        var binding = new Binding(source, target);
+        var binding = new Binding<string>(source, target);
         binding.Dispose();
         target.OnNext("target");
         
@@ -117,7 +129,7 @@ public class EngineTests
         var targetListener = Substitute.For<IObserver<string>>();
         target.Subscribe(targetListener);
         
-        var binding = new Binding(source, target);
+        var binding = new Binding<string>(source, target);
         binding.Dispose();
         source.OnNext("source");
         target.OnNext("target");
