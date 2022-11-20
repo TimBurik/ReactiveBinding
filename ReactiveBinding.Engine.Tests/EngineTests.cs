@@ -12,7 +12,7 @@ public class EngineTests
         var source = new Subject<string>();
         var target = Substitute.For<IObserver<string>>();
 
-        _ = Binding.Bind(source, target);
+        _ = BindingEngine.Bind(source, target);
         source.OnNext("test");
         
         target.Received().OnNext("test");
@@ -24,7 +24,7 @@ public class EngineTests
         var source = new Subject<int>();
         var target = Substitute.For<IObserver<int>>();
 
-        _ = Binding.Bind(source, target);
+        _ = BindingEngine.Bind(source, target);
         source.OnNext(42);
         
         target.Received().OnNext(42);
@@ -36,7 +36,7 @@ public class EngineTests
         var source = new Subject<string>();
         var target = Substitute.For<IObserver<string>>();
 
-        var binding = Binding.Bind(source, target);
+        var binding = BindingEngine.Bind(source, target);
         binding.Dispose();
         source.OnNext("test");
         
@@ -49,7 +49,7 @@ public class EngineTests
         var source = Substitute.For<IObserver<string>>();
         var target = new Subject<string>();
 
-        _ = Binding.Bind(source, target);
+        _ = BindingEngine.Bind(source, target);
         target.OnNext("test");
         
         source.Received().OnNext("test");
@@ -61,7 +61,7 @@ public class EngineTests
         var source = Substitute.For<IObserver<string>>();
         var target = new Subject<string>();
 
-        var binding = Binding.Bind(source, target);
+        var binding = BindingEngine.Bind(source, target);
         binding.Dispose();
         target.OnNext("test");
         
@@ -79,7 +79,7 @@ public class EngineTests
         var targetListener = Substitute.For<IObserver<string>>();
         target.Subscribe(targetListener);
         
-        _ = Binding.Bind(source, target);
+        _ = BindingEngine.Bind(source, target);
         source.OnNext("source");
         target.OnNext("target");
 
@@ -96,7 +96,7 @@ public class EngineTests
         var targetListener = Substitute.For<IObserver<string>>();
         target.Subscribe(targetListener);
         
-        var binding = Binding.Bind(source, target);
+        var binding = BindingEngine.Bind(source, target);
         binding.Dispose();
         source.OnNext("source");
         
@@ -112,7 +112,7 @@ public class EngineTests
 
         var target = new Subject<string>();
 
-        var binding = Binding.Bind(source, target);
+        var binding = BindingEngine.Bind(source, target);
         binding.Dispose();
         target.OnNext("target");
         
@@ -130,7 +130,7 @@ public class EngineTests
         var targetListener = Substitute.For<IObserver<string>>();
         target.Subscribe(targetListener);
         
-        var binding = Binding.Bind(source, target);
+        var binding = BindingEngine.Bind(source, target);
         binding.Dispose();
         source.OnNext("source");
         target.OnNext("target");
@@ -152,7 +152,7 @@ public class EngineTests
         target.Configure()
             .Subscribe(Arg.Any<IObserver<string>>()).Returns(x => targetEmitter.Subscribe(x.Arg<IObserver<string>>()));
 
-        _ = Binding.Bind(source, target);
+        _ = BindingEngine.Bind(source, target);
         sourceEmitter.OnNext(42);
         targetEmitter.OnNext("test");
         

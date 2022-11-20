@@ -3,7 +3,7 @@ using System.Reactive.Subjects;
 
 namespace ReactiveBinding.Engine;
 
-public static class Binding
+public static class BindingEngine
 {
     public static IDisposable Bind<T>(IObservable<T> source, IObserver<T> target)
     {
