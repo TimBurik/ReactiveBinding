@@ -29,4 +29,16 @@ public class EngineTests
         
         target.DidNotReceive().OnNext(Arg.Any<string>());
     }
+
+    [Fact]
+    public void Source_receives_updates_from_target()
+    {
+        var source = Substitute.For<IObserver<string>>();
+        var target = new Subject<string>();
+
+        _ = new Binding(source, target);
+        target.OnNext("test");
+        
+        source.Received().OnNext("test");
+    }
 }
