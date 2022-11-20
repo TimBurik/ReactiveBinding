@@ -1,0 +1,22 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReactiveBinding.Engine", "ReactiveBinding.Engine\ReactiveBinding.Engine.csproj", "{6616976D-704E-426A-B7E3-33AEE29B7F8E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReactiveBinding.Engine.Tests", "ReactiveBinding.Engine.Tests\ReactiveBinding.Engine.Tests.csproj", "{34425221-DDB7-446C-A394-BC43029D7B29}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{6616976D-704E-426A-B7E3-33AEE29B7F8E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6616976D-704E-426A-B7E3-33AEE29B7F8E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6616976D-704E-426A-B7E3-33AEE29B7F8E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6616976D-704E-426A-B7E3-33AEE29B7F8E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{34425221-DDB7-446C-A394-BC43029D7B29}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{34425221-DDB7-446C-A394-BC43029D7B29}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{34425221-DDB7-446C-A394-BC43029D7B29}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{34425221-DDB7-446C-A394-BC43029D7B29}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
