@@ -3,31 +3,25 @@ using System.Reactive.Subjects;
 
 namespace ReactiveBinding.Engine;
 
-public sealed class Binding<T> : IDisposable
+public static class Binding
 {
-    private readonly IDisposable _subscription;
-
-    public Binding(IObservable<T> source, IObserver<T> target)
+    public static IDisposable Bind<T>(IObservable<T> source, IObserver<T> target)
     {
-        _subscription = source.Subscribe(target);
+        return source.Subscribe(target);
     }
 
-    public Binding(IObserver<T> source, IObservable<T> target) : this(target, source)
+    public static IDisposable Bind<T>(IObserver<T> source, IObservable<T> target)
     {
+        return Bind(target, source);
     }
 
-    public Binding(ISubject<T, T> source, ISubject<T, T> target)
+    public static IDisposable Bind<TSource, TTarget>(ISubject<TSource, TTarget> source, ISubject<TTarget, TSource> target)
     {
-        var bindableSource = new BindableSubject<T>(source);
-        var bindableTarget = new BindableSubject<T>(target);
+        var bindableSource = new BindableSubject<TSource, TTarget>(source);
+        var bindableTarget = new BindableSubject<TTarget, TSource>(target);
         
-        _subscription = new CompositeDisposable(
+        return new CompositeDisposable(
             bindableSource.Subscribe(bindableTarget),
             bindableTarget.Subscribe(bindableSource));
-    }
-
-    public void Dispose()
-    {
-        _subscription.Dispose();
     }
 }

@@ -4,14 +4,14 @@ using System.Reactive.Subjects;
 
 namespace ReactiveBinding.Engine;
 
-internal sealed class BindableSubject<T> : ISubject<T, T>
+internal sealed class BindableSubject<TSink, TEmitter> : ISubject<TSink, TEmitter>
 {
-    private readonly IObserver<T> _sink;
-    private readonly IConnectableObservable<T> _emitter;
+    private readonly IObserver<TSink> _sink;
+    private readonly IConnectableObservable<TEmitter> _emitter;
 
     private IDisposable _emitterConnection;
 
-    public BindableSubject(ISubject<T, T> subject)
+    public BindableSubject(ISubject<TSink, TEmitter> subject)
     {
         _sink = subject.AsObserver();
         _emitter = subject.Publish();
@@ -29,7 +29,7 @@ internal sealed class BindableSubject<T> : ISubject<T, T>
         _sink.OnError(error);
     }
 
-    public void OnNext(T value)
+    public void OnNext(TSink value)
     {
         _emitterConnection.Dispose();
         
@@ -43,7 +43,7 @@ internal sealed class BindableSubject<T> : ISubject<T, T>
         }
     }
 
-    public IDisposable Subscribe(IObserver<T> observer)
+    public IDisposable Subscribe(IObserver<TEmitter> observer)
     {
         return _emitter.Subscribe(observer);
     }
